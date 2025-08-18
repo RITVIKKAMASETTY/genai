@@ -3,17 +3,11 @@ import requests
 import os
 from dotenv import load_dotenv
 from openai import OpenAI
-
-# Load environment variables
 load_dotenv()
-
-# Initialize Groq client
 client = OpenAI(
     base_url="https://api.groq.com/openai/v1",
     api_key=os.getenv("GROQ_API")
 )
-
-# Tools
 def get_weather(city: str):
     print("🔨 Tool Called: get_weather", city)
     url = f"https://wttr.in/{city}?format=%C+%t"
@@ -37,8 +31,6 @@ available_tools = {
         "description": "Takes a command as input to execute on system and returns output"
     }
 }
-
-# System Prompt
 system_prompt = """
 You are a helpful AI Assistant specialized in resolving user queries.
 You work in start, plan, action, observe mode.
@@ -74,8 +66,6 @@ Output: { "step": "action", "function": "get_weather", "input": "new york" }
 Output: { "step": "observe", "output": "12 Degree Cel" }
 Output: { "step": "output", "content": "The weather for new york seems to be 12 degrees." }
 """
-
-# Message History
 messages = [
     { "role": "system", "content": system_prompt }
 ]
